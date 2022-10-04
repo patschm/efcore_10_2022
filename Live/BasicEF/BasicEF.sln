@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicEF", "BasicEF\BasicEF.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scaffold", "Scaffold\Scaffold.csproj", "{5B5C1027-8DCB-440C-ABE6-532DABA52F36}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lifetimes", "Lifetimes\Lifetimes.csproj", "{EF9960AA-B9D1-4C25-8BF8-8A995BC29CC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{3B8A8338-E2C3-4821-B181-70394DFE6C03}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{5B5C1027-8DCB-440C-ABE6-532DABA52F36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B5C1027-8DCB-440C-ABE6-532DABA52F36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B5C1027-8DCB-440C-ABE6-532DABA52F36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF9960AA-B9D1-4C25-8BF8-8A995BC29CC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF9960AA-B9D1-4C25-8BF8-8A995BC29CC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF9960AA-B9D1-4C25-8BF8-8A995BC29CC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF9960AA-B9D1-4C25-8BF8-8A995BC29CC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B8A8338-E2C3-4821-B181-70394DFE6C03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B8A8338-E2C3-4821-B181-70394DFE6C03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B8A8338-E2C3-4821-B181-70394DFE6C03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B8A8338-E2C3-4821-B181-70394DFE6C03}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
