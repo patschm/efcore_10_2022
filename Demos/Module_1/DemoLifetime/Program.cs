@@ -68,7 +68,7 @@ internal class Program
     {
         Host.CreateDefaultBuilder()
            .ConfigureServices(svcs => {
-               svcs.AddHostedService<DIApp>();
+               svcs.AddHostedService<DIFactoryApp>();
                svcs.AddDbContextFactory<ProductContext>(opts => {
                    opts.UseSqlServer(connectionString);
                });
@@ -89,7 +89,7 @@ internal class Program
 
         Host.CreateDefaultBuilder()
           .ConfigureServices(svcs => {
-              svcs.AddHostedService<DIApp>();
+              svcs.AddHostedService<DIPoolingApp>();
               svcs.AddDbContextPool<ProductContext>(opts => {
                   opts.UseSqlServer(connectionString);
               });
