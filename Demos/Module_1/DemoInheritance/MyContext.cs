@@ -18,21 +18,21 @@ internal class MyContext : DbContext
         modelBuilder.HasDefaultSchema("Core");
 
         // Table-per-hierarchy TPH (Discriminator Field)
-        modelBuilder.Entity<Review>(conf =>
-        {
-            conf.HasDiscriminator(r => r.ReviewType)
-                .HasValue<Review>(ReviewType.Generic)
-                .HasValue<ConsumerReview>(ReviewType.Consumer)
-                .HasValue<ExpertReview>(ReviewType.Expert)
-                .HasValue<WebReview>(ReviewType.Web);
-        });
+        //modelBuilder.Entity<Review>(conf =>
+        //{
+        //    conf.HasDiscriminator(r => r.ReviewType)
+        //        .HasValue<Review>(ReviewType.Generic)
+        //        .HasValue<ConsumerReview>(ReviewType.Consumer)
+        //        .HasValue<ExpertReview>(ReviewType.Expert)
+        //        .HasValue<WebReview>(ReviewType.Web);
+        //});
 
         // Table-per-Type TPT (Derived classes have their own table)
         // Is slower than TPH
-        // modelBuilder.Entity<Review>().ToTable("Reviews");
-        // modelBuilder.Entity<ConsumerReview>().ToTable("ConsumerReviews");
-        // modelBuilder.Entity<ExpertReview>().ToTable("ExpertReviews");
-        // modelBuilder.Entity<WebReview>().ToTable("WebReviews");
+        modelBuilder.Entity<Review>().ToTable("Reviews");
+        modelBuilder.Entity<ConsumerReview>().ToTable("ConsumerReviews");
+        modelBuilder.Entity<ExpertReview>().ToTable("ExpertReviews");
+        modelBuilder.Entity<WebReview>().ToTable("WebReviews");
 
         // Entity Splitting. Split large tables into multiple entities
         modelBuilder.Entity<ReviewerCredential>(conf =>
