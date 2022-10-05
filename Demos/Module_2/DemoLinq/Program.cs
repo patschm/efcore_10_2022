@@ -1,33 +1,40 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using Microsoft.Extensions.Logging;
 
 namespace DemoLinq;
 
 internal class Program
 {
-    public static string connectionString = @"Server=.\SQLEXPRESS;Database=ShopDatabase;Trusted_Connection=True;MultipleActiveResultSets=true;";
+    public static string connectionString = @"Server=.\SQLEXPRESS;Database=ProductCatalog;Trusted_Connection=True;MultipleActiveResultSets=true;";
 
     static void Main(string[] args)
     {
-        ViaExtensions();
-        //ViaIntegrated();
+        //ViaExtensions();
+        ViaIntegrated();
     }
 
     private static void ViaExtensions()
     {
         var optionsBuilder = new DbContextOptionsBuilder();
         optionsBuilder.UseSqlServer(connectionString);
+        optionsBuilder.LogTo(s => Console.WriteLine(s), LogLevel.Information);
         var context = new ProductContext(optionsBuilder.Options);
 
-        var all = context.Brands
-                        .Where(b => b.Name!.StartsWith("C"))
-                        .Join(context.Products, b => b.Id, p => p.BrandId, (b, p) => new { b, p })
-                        .Select(cmp => new {Brand = cmp.b.Name, Product=cmp.p});
+        var subset = new long[] { 1, 2, 3, 4 };
+        var query = context.Products.Where(p => subset.Contains(p.Id));
+        query.ToList();
+        var q2 = context.Products.Select(p => new { p.Name, p.Image });
+        q2.ToList();
+        //var all = context.Brands
+        //                .Where(b => b.Name!.StartsWith("C"))
+        //                .Join(context.Products, b => b.Id, p => p.BrandId, (b, p) => new { b, p })
+        //                .Select(cmp => new {Brand = cmp.b.Name, Product=cmp.p});
 
-        foreach(var item in all)
-        {
-            Console.WriteLine($"{item.Brand} {item.Product.Name}");         
-        }
+        //foreach(var item in all)
+        //{
+        //    Console.WriteLine($"{item.Brand} {item.Product.Name}");         
+        //}
 
         // GroupJoin not supported yet :(
         //var gj = context.Brands
@@ -47,6 +54,7 @@ internal class Program
     {
         var optionsBuilder = new DbContextOptionsBuilder();
         optionsBuilder.UseSqlServer(connectionString);
+        optionsBuilder.LogTo(s => Console.WriteLine(s), LogLevel.Information);
         var context = new ProductContext(optionsBuilder.Options);
 
         var all = from item in context.Brands
@@ -56,7 +64,10 @@ internal class Program
 
         foreach (var item in all)
         {
-            Console.WriteLine($"{item.Brand} {item.Product.Name}");
+            //Console.WriteLine($"{item.Brand} {item.Product.Name}");
         }
+
+        var q2 = from p in context.Products group p by p.BrandId into it select new { Key=it.Key, Data = it.ToList() };
+        q2.ToList();
     }
 }
