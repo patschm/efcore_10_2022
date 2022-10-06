@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection.Metadata;
 
@@ -18,9 +19,9 @@ internal class Program
         //Insert();
         //Update();
         //Delete();
-        Conflicts();
+        //Conflicts();
         //Experiment1();
-       // Experiment2();
+       Experiment2();
     }
 
     private static void Conflicts()
@@ -34,21 +35,31 @@ internal class Program
         brand.Name = "Hans";
 
         Console.ReadLine();
-        try
+        while (true)
         {
-            ctx.SaveChanges();
-        }
-        catch(DbUpdateConcurrencyException ex)
-        {
-            var c1 = ex.Entries.First();
-            Console.WriteLine(c1.CurrentValues[nameof(Brand.Name)]);
-            Console.WriteLine(c1.OriginalValues[nameof(Brand.Name)]);
-            var dbValues = c1.GetDatabaseValues();
-            Console.WriteLine(dbValues[nameof(Brand.Name)]);
-        }
-        catch(DbUpdateException e)
-        {
-            Console.WriteLine(e.Message);
+            try
+            {
+                ctx.SaveChanges();
+                break;
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                var c1 = ex.Entries.First();
+                Console.WriteLine(c1.CurrentValues[nameof(Brand.Name)]);
+                Console.WriteLine(c1.OriginalValues[nameof(Brand.Name)]);
+                var dbValues = c1.GetDatabaseValues();
+                Console.WriteLine(dbValues[nameof(Brand.Name)]);
+                c1.OriginalValues.SetValues(dbValues); // Client Wins
+                
+                //c1.OriginalValues.SetValues(dbValues); // Database Wins
+                //c1.CurrentValues.SetValues(dbValues); // Database Wins
+                //break;
+            }
+            catch (DbUpdateException e)
+            {
+                Console.WriteLine(e.Message);
+                break;
+            }
         }
     }
 
@@ -75,8 +86,10 @@ internal class Program
         var expr = Expression.AndAlso(
             Expression.Equal(propName, Expression.Constant("Nikon")),
             Expression.Equal(propId, Expression.Constant(1L)));
-        var lambda = expr.GetLambdaOrNull();
+        var lambda = Expression.Lambda(expr, brand) as Expression<Func<Brand, bool>>;
         Console.WriteLine(lambda);
+        var data = ctx.Brands.Where(lambda);
+        Console.WriteLine(data.Count());
     }
 
     private static void Delete()
