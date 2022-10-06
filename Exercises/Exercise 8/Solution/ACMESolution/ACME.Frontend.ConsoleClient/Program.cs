@@ -45,34 +45,39 @@ internal class Program
         brand!.Name = "My Value";
         // TODO 1: Run this code and note that there's a concurrency conflict
         // TODO 2: Resolve the conflict by letting the user chose which one to keep: The database value or his value
-        try
+        while(true)
         {
-            ctx.SaveChanges();
-        }
-        catch (DbUpdateConcurrencyException dbc)
-        {
-            foreach (var entry in dbc.Entries)
+            try
             {
-                var curvalues = entry.CurrentValues;
-                var dbvalues = entry.GetDatabaseValues()!;
-                foreach (var prop in curvalues.Properties)
+                ctx.SaveChanges();
+                break;
+            }
+            catch (DbUpdateConcurrencyException dbc)
+            {
+                foreach (var entry in dbc.Entries)
                 {
-                    if (curvalues[prop] != dbvalues[prop])
+                    var curvalues = entry.CurrentValues;
+                    var dbvalues = entry.GetDatabaseValues()!;
+                    foreach (var prop in curvalues.Properties)
                     {
-                        if (prop.Name == nameof(Entity.Id) || prop.Name == nameof(Entity.Timestamp)) continue;
-                        Console.WriteLine($"Your value ({curvalues[prop]}) was changed by someone else ({dbvalues[prop]})");
+                        if (curvalues[prop] != dbvalues[prop])
+                        {
+                            if (prop.Name == nameof(Entity.Id) || prop.Name == nameof(Entity.Timestamp)) continue;
+                            Console.WriteLine($"Your value ({curvalues[prop]}) was changed by someone else ({dbvalues[prop]})");
+                        }
                     }
-                }
-                Console.WriteLine("Override database values? (y/n)");
-                if (Console.ReadKey().Key == ConsoleKey.Y)
-                {
-                    entry.OriginalValues.SetValues(dbvalues);
-                    ctx.SaveChanges();
-                }
-                else
-                {
-                    entry.OriginalValues.SetValues(dbvalues);
-                    entry.CurrentValues.SetValues(dbvalues);
+                    Console.WriteLine("Override database values? (y/n)");
+                    if (Console.ReadKey().Key == ConsoleKey.Y)
+                    {
+                        entry.OriginalValues.SetValues(dbvalues);
+                        //ctx.SaveChanges();
+                    }
+                    else
+                    {
+                        entry.OriginalValues.SetValues(dbvalues);
+                        entry.CurrentValues.SetValues(dbvalues);
+                        break;
+                    }
                 }
             }
         }

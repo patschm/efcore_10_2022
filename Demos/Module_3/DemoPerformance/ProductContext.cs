@@ -6,9 +6,9 @@ namespace DemoPerformance;
 internal class ProductContext : DbContext
 {
     // For Compiled models
-    public ProductContext(): base()
-    {
-    }
+    //public ProductContext(): base()
+    //{
+    //}
     public ProductContext(DbContextOptions options) : base(options)
     {
     }
@@ -28,7 +28,7 @@ internal class ProductContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(Program.connectionString);
+        //optionsBuilder.UseSqlServer(Program.connectionString);
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

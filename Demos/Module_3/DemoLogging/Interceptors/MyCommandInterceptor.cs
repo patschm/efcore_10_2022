@@ -9,7 +9,7 @@ public class MyCommandInterceptor : DbCommandInterceptor
     {
         if (command.CommandText.Contains("FROM [Core].[ProductGroups]"))
         {
-            command.CommandText += "WHERE Id > 5";
+            command.CommandText += " WHERE Id > 5";
         }
         return base.ReaderExecuting(command, eventData, result);
     }

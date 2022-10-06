@@ -21,6 +21,6 @@ internal class ProductContext : DbContext
     {
         _logger.LogInformation("Starting OnModelCreating....");
         modelBuilder.HasDefaultSchema("Core");
-        _logger.LogInformation("Ending OnModelCreating....");
+        _logger.LogInformation("Ending OnModelCreated....");
     }
 }

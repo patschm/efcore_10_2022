@@ -9,14 +9,14 @@ namespace DemoPerformance;
 
 internal class Program
 {
-    public static string connectionString = @"Server=.\SQLEXPRESS;Database=ShopDatabase;Trusted_Connection=True;MultipleActiveResultSets=true;Encrypt=False";
+    public static string connectionString = @"Server=.\SQLEXPRESS;Database=ProductCatalog;Trusted_Connection=True;MultipleActiveResultSets=true;Encrypt=False";
 
     static void Main(string[] args)
     {
         //Diagnostics();
         //ConnectionPooling();
-        //CompiledModels();
-        CompiledQueries();         
+        CompiledModels();
+        //CompiledQueries();         
     }
 
     private static void Diagnostics()
@@ -167,11 +167,7 @@ internal class Program
             watch.Stop();
             timers["compiled"] += watch.Elapsed;
         }
-        Console.WriteLine($"Without compiled models: It took on average {timers["normal"] / 20} seconds");
-        Console.WriteLine($"With compiled models: It took on average {timers["compiled"] / 20} seconds");
-
-        
-
-           
+        Console.WriteLine($"Without compiled queries: It took on average {timers["normal"] / 20} seconds");
+        Console.WriteLine($"With compiled queries: It took on average {timers["compiled"] / 20} seconds");        
     }
 }

@@ -14,15 +14,15 @@ namespace DemoLogging;
 
 internal class Program
 {
-    public static string connectionString = @"Server=.\SQLEXPRESS;Database=ShopDatabase;Trusted_Connection=True;MultipleActiveResultSets=true;Encrypt=False";
+    public static string connectionString = @"Server=.\SQLEXPRESS;Database=ProductCatalog;Trusted_Connection=True;MultipleActiveResultSets=true;Encrypt=False";
 
     static void Main(string[] args)
     {
-        Simple();
+        //Simple();
         //Extensions();
         //Events();
         //DiagnosticListeners();
-        //Interceptors();
+        Interceptors();
     }
 
     private static void Simple()
@@ -50,6 +50,7 @@ internal class Program
                 Console.WriteLine($"   -{product.Brand.Name} {product.Name}");
             }
         }
+        Console.WriteLine(context.ChangeTracker.DebugView.LongView);
     }
     private static void Extensions()
     {

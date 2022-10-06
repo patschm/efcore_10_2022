@@ -220,7 +220,7 @@ internal class Program
         var context2 = new ProductContext(optionsBuilder.Options);
 
         // Set the isolation level
-        var isoLevel = System.Data.IsolationLevel.ReadUncommitted;
+        var isoLevel = System.Data.IsolationLevel.ReadCommitted;
 
         using var readTransaction = context1.Database.BeginTransaction(isoLevel);
         using var writeTransaction = context2.Database.BeginTransaction();
@@ -233,9 +233,10 @@ internal class Program
             Console.WriteLine("Waiting 1 seconds for commit");
             Task.Delay(1000).Wait();
 
-            writeTransaction.Commit();
+            //writeTransaction.Commit();
         });
 
+       
         var readData = Task.Run(() => {
             var query = context1.Brands;
 
@@ -245,7 +246,7 @@ internal class Program
             }
             
             writeAction.Start();
-            Task.Delay(200).Wait();
+            Task.Delay(500).Wait();
             
             Console.WriteLine("==== Read again");
             foreach (var b in query)
@@ -255,7 +256,7 @@ internal class Program
             readTransaction.Commit();
         });
 
-        Task.Delay(10000).Wait();
+        Task.Delay(30000).Wait();
         var brand = context1.Brands.First(b => b.Name == "Brand 1");
         context1.Remove(brand);
         context1.SaveChanges();
@@ -322,9 +323,9 @@ internal class Program
         });
 
         var readData = Task.Run(() => {
-            var isoLevel = System.Data.IsolationLevel.RepeatableRead;
+            var isoLevel = System.Data.IsolationLevel.Snapshot;
             using var readTransaction = context1.Database.BeginTransaction(isoLevel);
-            var query = context1.Brands.Where(b=>b.Id > 50).AsNoTracking();
+            var query = context1.Brands.Where(b=>b.Id > 2).AsNoTracking();
 
             foreach (var b in query)
             {
