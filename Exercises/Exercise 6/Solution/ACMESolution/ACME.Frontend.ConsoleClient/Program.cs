@@ -15,12 +15,19 @@ internal class Program
         Exercise1();
         //Exercise2();
         //Exercise3();  
+
+        var bld = new DbContextOptionsBuilder<ShopDatabaseContext>();
+        bld.UseSqlServer(connectionString);
+        //bld.LogTo(Console.WriteLine);
+        var ctx = new ShopDatabaseContext(bld.Options);
+        Console.WriteLine(ctx.Products.Count());
     }
 
     private static void Exercise1()
     {
         var bld = new DbContextOptionsBuilder<ShopDatabaseContext>();
         bld.UseSqlServer(connectionString);
+        //bld.LogTo(Console.WriteLine);
         var ctx = new ShopDatabaseContext(bld.Options);
         // TODO 1: Use Explicit loading to read related data
 
@@ -32,7 +39,7 @@ internal class Program
             ctx.Entry(item).Collection(p=>p.Products).Load();
             foreach(var product in item.Products)
             {
-                ctx.Entry(product).Reference(p => p.Brand).Load();
+                //ctx.Entry(product).Reference(p => p.Brand).Load();
                 Console.WriteLine($"\t* {product.Brand?.Name} {product.Name}");
             }
         }
@@ -43,7 +50,9 @@ internal class Program
         bld.UseSqlServer(connectionString);
         var ctx = new ShopDatabaseContext(bld.Options);
         // TODO 2: Use Eager Loading to read related data
-        var query = ctx.ProductGroups.Include(p => p.Products).ThenInclude(p => p.Brand);
+        var query = ctx.ProductGroups
+            .Include(p => p.Products);
+                //.ThenInclude(p => p.Brand);
 
         foreach (var item in query)
         {

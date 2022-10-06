@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoLinq", "DemoLinq\DemoLinq.csproj", "{27222F44-2DEC-43F3-A902-0D8F3954CAF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoLinq", "DemoLinq\DemoLinq.csproj", "{27222F44-2DEC-43F3-A902-0D8F3954CAF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Navigation", "Navigation\Navigation.csproj", "{F7FD089C-442F-4DC8-A496-71C195348A73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manipulation", "Manipulation\Manipulation.csproj", "{70B634ED-DF98-4C92-AFB2-1E37ED86801B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{27222F44-2DEC-43F3-A902-0D8F3954CAF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27222F44-2DEC-43F3-A902-0D8F3954CAF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27222F44-2DEC-43F3-A902-0D8F3954CAF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7FD089C-442F-4DC8-A496-71C195348A73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7FD089C-442F-4DC8-A496-71C195348A73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7FD089C-442F-4DC8-A496-71C195348A73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7FD089C-442F-4DC8-A496-71C195348A73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70B634ED-DF98-4C92-AFB2-1E37ED86801B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70B634ED-DF98-4C92-AFB2-1E37ED86801B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70B634ED-DF98-4C92-AFB2-1E37ED86801B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70B634ED-DF98-4C92-AFB2-1E37ED86801B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

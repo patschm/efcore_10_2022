@@ -6,7 +6,7 @@ namespace DemoRawQueries;
 
 internal class Program
 {
-    public static string connectionString = @"Server=.\SQLEXPRESS;Database=ShopDatabase;Trusted_Connection=True;MultipleActiveResultSets=true;";
+    public static string connectionString = @"Server=.\SQLEXPRESS;Database=ProductCatalog;Trusted_Connection=True;MultipleActiveResultSets=true;";
     
     static void Main(string[] args)
     {
@@ -21,8 +21,9 @@ internal class Program
         var optionsBuilder = new DbContextOptionsBuilder();
         optionsBuilder.UseSqlServer(connectionString);
         var context = new ProductContext(optionsBuilder.Options);
-
-        var pat = new SqlParameter("pat", "C");
+        // EF 7.0
+        //var val = context.Database.SqlQuery<int>("SELECT COUNT(*) FROM Core.Products");
+        var pat = new SqlParameter("pat", "C");  
         var brands = context.Brands.FromSqlRaw("SELECT * FROM Core.Brands WHERE [Name] LIKE @pat+'%'", pat);
         foreach (var brand in brands)
         {

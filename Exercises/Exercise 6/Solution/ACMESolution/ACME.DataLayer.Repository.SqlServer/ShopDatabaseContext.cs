@@ -62,6 +62,9 @@ public partial class ShopDatabaseContext : DbContext
             e.HasOne(p => p.ProductGroup)
                 .WithMany(p => p.Products)
                 .HasForeignKey(p => p.ProductGroupId);
+
+            //e.Navigation(p => p.Brand).AutoInclude();
+            //e.HasQueryFilter(p => p.Id > 300);
         });
         modelBuilder.Entity<ProductGroup>(e => {
             e.Property(p => p.Name)
